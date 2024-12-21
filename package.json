@@ -16,7 +16,7 @@
     "@clerk/clerk-expo": "^2.3.0",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/native": "^6.0.2",
-    "expo": "~51.0.28",
+    "expo": "51.0.21",
     "expo-auth-session": "~5.5.2",
     "expo-crypto": "~13.0.2",
     "expo-dev-client": "^4.0.29",

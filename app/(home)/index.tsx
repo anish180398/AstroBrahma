@@ -7,8 +7,10 @@ export default function Page() {
 
   return (
     <View>
+      <Text>hello</Text>
+      <Link href={'/(auth)/sign-in'}>Sign In</Link>
       <SignedIn>
-        <Text style={{color:'white'}}>Hello {user?.emailAddresses[0].emailAddress}</Text>
+        <Text style={{color:'black'}}>Hello test {user?.emailAddresses[0].emailAddress}</Text>
       </SignedIn>
       <SignedOut>
         <Link href="../(auth)/sign-in">

@@ -88,9 +88,10 @@ function RootLayoutNav() {
         <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
         <ClerkLoaded>
 
-      <Stack>
+      <Stack  initialRouteName="(home)">
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="(home)" options={{ headerShown: false }} />
+
       </Stack>
       </ClerkLoaded>
       </ClerkProvider>
