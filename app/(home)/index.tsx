@@ -1,25 +1,32 @@
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
-import { Link } from 'expo-router'
-import { Text, View } from 'react-native'
+import React from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import Header from '@/components/home/Header';
+import SearchBar from '@/components/home/SearchBar';
+import QuickLinks from '@/components/home/QuickLinks';
+import WhatsNew from '@/components/home/WhatsNew';
+import Astrologers from '@/components/home/Astrologers';
+import DiscoverServices from '@/components/home/DiscoverServices';
+import Community from '@/components/home/Community';
 
-export default function Page() {
-  const { user } = useUser()
-
+const Home = () => {
   return (
-    <View>
-      <Text>hello</Text>
-      <Link href={'/(auth)/sign-in'}>Sign In</Link>
-      <SignedIn>
-        <Text style={{color:'black'}}>Hello test {user?.emailAddresses[0].emailAddress}</Text>
-      </SignedIn>
-      <SignedOut>
-        <Link href="../(auth)/sign-in">
-          <Text style={{color:'white'}}>Sign In</Text>
-        </Link>
-        <Link href="../(auth)/sign-up">
-          <Text style={{color:'white'}}>Sign Up</Text>
-        </Link>
-      </SignedOut>
-    </View>
-  )
-}
+    <ScrollView style={styles.container}>
+      <Header />
+      <SearchBar />
+      <QuickLinks />
+      <WhatsNew />
+      <Astrologers />
+      <DiscoverServices />
+      {/* <Community /> */}
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
+
+export default Home;

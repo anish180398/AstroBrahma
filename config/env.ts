@@ -1,0 +1,1 @@
+export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME || 'dn8ouckig'; 
