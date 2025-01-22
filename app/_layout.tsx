@@ -99,6 +99,21 @@ function InitialLayout() {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const [loaded, error] = useFonts({
+    ...FontAwesome.font,
+  });
+
+  // Hide the splash screen once the fonts have loaded
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  // Return null if fonts haven't loaded
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <ClerkProvider 
