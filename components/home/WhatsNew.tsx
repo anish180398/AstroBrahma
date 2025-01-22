@@ -1,123 +1,99 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
-const WhatsNew = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const scrollViewRef = useRef(null);
-  const width = Dimensions.get('window').width - 32;
+const newItems = [
+  {
+    id: 1,
+    title: 'Live Astrology Workshop',
+    description: 'Learn the basics of astrology from experts',
+    image: 'https://res.cloudinary.com/dn8ouckig/image/upload/v1737410439/icon_lql6hg.png',
+    route: '/(home)/workshop',
+  },
+  {
+    id: 2,
+    title: 'New Astrologers',
+    description: 'Expert astrologers joined our platform',
+    image: 'https://res.cloudinary.com/dn8ouckig/image/upload/v1737410439/icon_lql6hg.png',
+    route: '/(home)/astrologers',
+  },
+];
 
-  const slides = [
-    {
-      id: 1,
-      title: "Explore today's horoscope",
-      buttonText: 'Explore',
-    },
-    {
-      id: 2,
-      title: 'Check your compatibility',
-      buttonText: 'Check Now',
-    },
-    {
-      id: 3,
-      title: 'Generate your Kundli',
-      buttonText: 'Generate',
-    },
-  ];
-
-  const handleScroll = (event) => {
-    const slideSize = event.nativeEvent.layoutMeasurement.width;
-    const offset = event.nativeEvent.contentOffset.x;
-    const activeIndex = Math.round(offset / slideSize);
-    setActiveSlide(activeIndex);
-  };
+export default function WhatsNew() {
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>✨ What's New</Text>
+      <Text style={styles.title}>What's New</Text>
       <ScrollView
-        ref={scrollViewRef}
         horizontal
-        pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
+        contentContainerStyle={styles.scrollContent}
       >
-        {slides.map((item) => (
-          <View key={item.id} style={[styles.slide, { width }]}>
-            <Text style={styles.slideTitle}>{item.title}</Text>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>{item.buttonText}</Text>
-            </TouchableOpacity>
-          </View>
+        {newItems.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            style={styles.card}
+            onPress={() => router.push(item.route as any)}
+          >
+            <Image source={item.image} style={styles.image} />
+            <View style={styles.cardContent}>
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text style={styles.cardDescription}>{item.description}</Text>
+            </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
-      <View style={styles.pagination}>
-        {slides.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.paginationDot,
-              index === activeSlide && styles.paginationDotActive,
-            ]}
-          />
-        ))}
-      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    marginVertical: 16,
+    padding: 16,
+    backgroundColor: '#fff',
   },
-  sectionTitle: {
+  title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 16,
+    color: '#333',
   },
-  slide: {
-    height: 160,
-    backgroundColor: '#FFA500',
-    borderRadius: 12,
-    padding: 20,
-    justifyContent: 'space-between',
-    marginRight: 16,
+  scrollContent: {
+    paddingRight: 16,
   },
-  slideTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    maxWidth: '80%',
-  },
-  button: {
+  card: {
+    width: 280,
+    height: 200,
     backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 20,
-    alignSelf: 'flex-start',
+    borderRadius: 12,
+    marginRight: 16,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  buttonText: {
-    color: '#000',
-    fontWeight: '600',
+  image: {
+    width: '100%',
+    height: 120,
+    resizeMode: 'cover',
   },
-  pagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 16,
+  cardContent: {
+    padding: 12,
   },
-  paginationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#D9D9D9',
-    marginHorizontal: 4,
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
   },
-  paginationDotActive: {
-    backgroundColor: '#FFA500',
-    width: 24,
+  cardDescription: {
+    fontSize: 14,
+    color: '#666',
   },
-});
-
-export default WhatsNew; 
+}); 

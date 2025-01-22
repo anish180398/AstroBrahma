@@ -1,0 +1,5 @@
+- Live consultation management
+- Schedule management
+- Earnings tracking
+- Profile management
+- Client history 

@@ -1,0 +1,4 @@
+- Birth chart storage
+- Consultation history
+- Favorite astrologers
+- Wallet management 

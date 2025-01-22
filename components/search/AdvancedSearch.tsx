@@ -1,0 +1,5 @@
+- Advanced astrologer search
+- Service category filters
+- Price range filters
+- Language filters
+- Expertise filters 

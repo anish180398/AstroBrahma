@@ -1,77 +1,119 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
-const QuickLinks = () => {
-  const links = [
-    {
-      id: 1,
-      title: 'HOROSCOPE',
-      icon: 'zodiac-pisces', // or any other zodiac icon you prefer
-      color: '#FFA500',
-    },
-    {
-      id: 2,
-      title: 'REMEDIES',
-      icon: 'meditation',
-      color: '#FFA500',
-    },
-    {
-      id: 3,
-      title: 'BLOGS',
-      icon: 'book-open-variant',
-      color: '#FFA500',
-    },
-  ];
+interface QuickLink {
+  id: string;
+  title: string;
+  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  route: string;
+  color: string;
+}
+
+const quickLinks: QuickLink[] = [
+  {
+    id: '1',
+    title: 'Daily Horoscope',
+    icon: 'zodiac-aries',
+    route: '/(screens)/daily-horoscope',
+    color: '#FF6B6B',
+  },
+  {
+    id: '2',
+    title: 'Live Consultation',
+    icon: 'video',
+    route: '/(screens)/live-consultation',
+    color: '#4ECDC4',
+  },
+  {
+    id: '3',
+    title: 'Chat with Astrologer',
+    icon: 'chat',
+    route: '/(screens)/chat-astrologer',
+    color: '#45B7D1',
+  },
+  {
+    id: '4',
+    title: 'Remedies',
+    icon: 'star-four-points',
+    route: '/(screens)/remedies',
+    color: '#96CEB4',
+  },
+];
+
+export default function QuickLinks() {
+  const router = useRouter();
 
   return (
-    <ScrollView 
-      horizontal 
-      showsHorizontalScrollIndicator={false}
-      style={styles.container}
-    >
-      {links.map((link) => (
-        <TouchableOpacity 
-          key={link.id} 
-          style={styles.linkItem}
-        >
-          <View style={[styles.iconContainer, { backgroundColor: link.color }]}>
-            <MaterialCommunityIcons 
-              name={link.icon} 
-              size={24} 
-              color="white" 
-            />
-          </View>
-          <Text style={styles.linkText}>{link.title}</Text>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Quick Links</Text>
+      </View>
+      <View style={styles.grid}>
+        {quickLinks.map((link) => (
+          <TouchableOpacity
+            key={link.id}
+            style={styles.linkCard}
+            onPress={() => router.push(link.route as any)}
+          >
+            <View style={[styles.iconContainer, { backgroundColor: link.color + '15' }]}>
+              <MaterialCommunityIcons name={link.icon} size={32} color={link.color} />
+            </View>
+            <Text style={styles.linkTitle}>{link.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  header: {
     flexDirection: 'row',
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-  },
-  linkItem: {
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginRight: 20,
+    marginBottom: 16,
   },
-  iconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  linkText: {
-    fontSize: 12,
-    fontWeight: '600',
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
     color: '#333',
   },
-});
-
-export default QuickLinks; 
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  linkCard: {
+    width: '48%',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    alignItems: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  iconContainer: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  linkTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333',
+    textAlign: 'center',
+  },
+}); 

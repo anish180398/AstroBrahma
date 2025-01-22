@@ -1,77 +1,70 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';  
-import { CLOUDINARY_IMAGES } from '@/constants/images';
-import { getCloudinaryImage } from '@/utils/cloudinary';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { useRouter } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const Header = () => {
+export default function Header() {
+  const router = useRouter();
 
-    const headerImage = "https://res.cloudinary.com/dn8ouckig/image/upload/v1737410439/icon_lql6hg.png"
-console.log(headerImage)
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Header</Text>
-      <View style={styles.header}>
-        <TouchableOpacity>
-        <Ionicons name="menu" size={24} color="black" />
-        </TouchableOpacity>
-        <View style={styles.titleContainer}>
-        {headerImage && (
+      <View style={styles.leftSection}>
         <Image
-          source={{ uri: headerImage }}
+          source={require('@/assets/images/icon.png')}
           style={styles.logo}
-          resizeMode="cover"
         />
-      )}
-          <Text style={styles.title}>Astro Brahma</Text>
+        <View>
+          <Text style={styles.greeting}>Welcome back</Text>
+          <Text style={styles.name}>John Doe</Text>
         </View>
-        <TouchableOpacity>
-        {headerImage && (
-        <Image
-          source={{ uri: headerImage }}
-          style={styles.logo}
-          resizeMode="cover"
-        />
-      )}
+      </View>
+      <View style={styles.rightSection}>
+        <TouchableOpacity style={styles.iconButton}>
+          <MaterialCommunityIcons name="bell-outline" size={24} color="#333" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <MaterialCommunityIcons name="wallet-outline" size={24} color="#333" />
         </TouchableOpacity>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
   },
-  menuIcon: {
-    width: 24,
-    height: 24,
-  },
-  titleContainer: {
+  leftSection: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   logo: {
-    width: 30,
-    height: 30,
-    marginRight: 8,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 12,
   },
-  profilePic: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+  greeting: {
+    fontSize: 14,
+    color: '#666',
   },
-});
-
-export default Header; 
+  name: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  rightSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconButton: {
+    padding: 8,
+    marginLeft: 8,
+  },
+}); 

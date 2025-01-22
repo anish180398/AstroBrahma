@@ -1,143 +1,155 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const Astrologers = () => {
-  const astrologers = [
-    { id: 1, name: 'John Doe', specialty: 'Horoscope', rating: 4.8, price: 25 },
-    { id: 2, name: 'John Doe', specialty: 'Numerology', rating: 4.8, price: 30 },
-    { id: 3, name: 'John Doe', specialty: 'Horoscope', rating: 5.0, price: 25 },
-    { id: 4, name: 'John Doe', specialty: 'Horoscope', rating: 4.9, price: 35 },
-  ];
-  const profileImageUrl = 'https://res.cloudinary.com/dn8ouckig/image/upload/v1737410439/icon_lql6hg.png';
+const astrologers = [
+  {
+    id: 1,
+    name: 'Dr. Sharma',
+    speciality: 'Vedic Astrology',
+    experience: '15 years',
+    rating: 4.8,
+    image: 'https://res.cloudinary.com/dn8ouckig/image/upload/v1737410439/icon_lql6hg.png',
+    online: true,
+  },
+  {
+    id: 2,
+    name: 'Mrs. Patel',
+    speciality: 'Tarot Reading',
+    experience: '10 years',
+    rating: 4.7,
+    image: 'https://res.cloudinary.com/dn8ouckig/image/upload/v1737410439/icon_lql6hg.png',
+    online: true,
+  },
+];
+
+export default function Astrologers() {
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Astrologers</Text>
-        <TouchableOpacity>
-          <Text style={styles.showAll}>Show all</Text>
+        <Text style={styles.title}>Top Astrologers</Text>
+        <TouchableOpacity onPress={() => router.push('/(screens)/astrologers')}>
+          <Text style={styles.viewAll}>View All</Text>
         </TouchableOpacity>
       </View>
-      
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
         {astrologers.map((astrologer) => (
-          <View key={astrologer.id} style={styles.card}>
-            {astrologer.id === 1 && (
-              <View style={styles.featuredBadge}>
-                <Text style={styles.featuredText}>Featured</Text>
-              </View>
-            )}
-            <Image
-              source={{ uri: profileImageUrl }}
-              style={styles.profileImage}
-            />
-            <Text style={styles.name}>{astrologer.name}</Text>
-            <Text style={styles.specialty}>{astrologer.specialty}</Text>
-            <View style={styles.ratingContainer}>
-              <Text style={styles.price}>${astrologer.price}/min</Text>
-              <View style={styles.rating}>
-                <Text style={styles.ratingText}>⭐ {astrologer.rating}</Text>
+          <TouchableOpacity
+            key={astrologer.id}
+            style={styles.card}
+            onPress={() => router.push(`/(astrologers)/astrologersProfile/${astrologer.id}` as any)}
+          >
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: astrologer.image }} style={styles.image} />
+              {astrologer.online && <View style={styles.onlineBadge} />}
+            </View>
+            <View style={styles.cardContent}>
+              <Text style={styles.name}>{astrologer.name}</Text>
+              <Text style={styles.speciality}>{astrologer.speciality}</Text>
+              <View style={styles.ratingContainer}>
+                <MaterialCommunityIcons name="star" size={16} color="#FFA500" />
+                <Text style={styles.rating}>{astrologer.rating}</Text>
+                <Text style={styles.experience}>{astrologer.experience}</Text>
               </View>
             </View>
-            <TouchableOpacity style={styles.connectButton}>
-              <Text style={styles.connectText}>Connect</Text>
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
+    padding: 16,
+    backgroundColor: '#fff',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 12,
+    marginBottom: 16,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#333',
   },
-  showAll: {
+  viewAll: {
+    fontSize: 14,
     color: '#FFA500',
+    fontWeight: '500',
+  },
+  scrollContent: {
+    paddingRight: 16,
   },
   card: {
-    backgroundColor: 'white',
+    width: 200,
+    backgroundColor: '#fff',
     borderRadius: 12,
-    padding: 12,
-    marginLeft: 16,
-    width: 160,
+    marginRight: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
   },
-  featuredBadge: {
+  imageContainer: {
+    position: 'relative',
+  },
+  image: {
+    width: '100%',
+    height: 150,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  onlineBadge: {
     position: 'absolute',
+    right: 8,
     top: 8,
-    left: 8,
-    backgroundColor: 'red',
-    borderRadius: 4,
-    padding: 4,
-    zIndex: 1,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#4CAF50',
+    borderWidth: 2,
+    borderColor: '#fff',
   },
-  featuredText: {
-    color: 'white',
-    fontSize: 10,
-  },
-  profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    alignSelf: 'center',
-    marginBottom: 8,
+  cardContent: {
+    padding: 12,
   },
   name: {
     fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
   },
-  specialty: {
-    color: '#666',
-    textAlign: 'center',
+  speciality: {
     fontSize: 14,
+    color: '#666',
+    marginBottom: 8,
   },
   ratingContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 8,
-  },
-  price: {
-    fontSize: 12,
-    color: '#666',
   },
   rating: {
-    backgroundColor: '#FFF9E6',
-    padding: 4,
-    borderRadius: 4,
+    fontSize: 14,
+    color: '#333',
+    marginLeft: 4,
+    marginRight: 8,
   },
-  ratingText: {
-    fontSize: 12,
-    color: '#FFA500',
+  experience: {
+    fontSize: 14,
+    color: '#666',
   },
-  connectButton: {
-    backgroundColor: '#FFA500',
-    borderRadius: 20,
-    padding: 8,
-    alignItems: 'center',
-  },
-  connectText: {
-    color: 'white',
-    fontWeight: '600',
-  },
-});
-
-export default Astrologers; 
+}); 

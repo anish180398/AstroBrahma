@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import Header from '@/components/home/Header';
 import SearchBar from '@/components/home/SearchBar';
 import QuickLinks from '@/components/home/QuickLinks';
@@ -8,19 +8,21 @@ import Astrologers from '@/components/home/Astrologers';
 import DiscoverServices from '@/components/home/DiscoverServices';
 import Community from '@/components/home/Community';
 
-const Home = () => {
+export default function HomeScreen() {
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header />
-      <SearchBar />
-      <QuickLinks />
-      <WhatsNew />
-      <Astrologers />
-      <DiscoverServices />
-      {/* <Community /> */}
-    </ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <SearchBar />
+        <QuickLinks />
+        <WhatsNew />
+        <Astrologers />
+        <DiscoverServices />
+        <Community />
+      </ScrollView>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -28,5 +30,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-
-export default Home;

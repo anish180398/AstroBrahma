@@ -1,0 +1,5 @@
+- User management
+- Astrologer management
+- Service management
+- Revenue tracking
+- Content management 

@@ -1,0 +1,3 @@
+- Rating system
+- Review management
+- Report issues 
